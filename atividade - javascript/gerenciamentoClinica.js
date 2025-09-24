@@ -128,3 +128,37 @@ const carregarDadosIniciais = () => {
     console.log("✔ Dados iniciais carregados em memória.");
 };
 
+// --- 4. FUNCIONALIDADES DO SISTEMA ---
+// 
+
+// Cadastrar novo registro (usando Arrow Function)
+const cadastrarPaciente = (nome, cpf, telefone) => {
+    const novoPaciente = new Paciente(idContador++, nome, cpf, telefone);
+    pacientes.push(novoPaciente);
+    console.log(`\n✔ Paciente "${nome}" cadastrado com sucesso!`);
+    return novoPaciente;
+};
+
+// Listar registros (usando Template Literals)
+const listarPacientes = () => {
+    console.log("\n--- LISTA DE PACIENTES ---");
+    pacientes.forEach(p => {
+        console.log(`ID: ${p.id} | Nome: ${p.nome} | CPF: ${p.cpf} | Telefone: ${p.telefone}`);
+    });
+    console.log("--------------------------");
+};
+
+const listarConsultas = () => {
+    console.log("\n--- LISTA DE CONSULTAS ---");
+    consultas.forEach(c => {
+        // Desestruturação de Objetos
+        const { paciente, medico, data, hora, clinica } = c;
+        const { nome: nomePaciente } = paciente;
+        const { nome: nomeMedico } = medico;
+        const { nome: nomeClinica } = clinica;
+
+        // Uso de Template Literals
+        console.log(`Data: ${data} às ${hora} | Paciente: ${nomePaciente} | Médico: ${nomeMedico} | Clínica: ${nomeClinica}`);
+    });
+    console.log("----------------------------");
+};
