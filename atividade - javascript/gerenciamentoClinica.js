@@ -9,80 +9,82 @@
  * =====================================================================================
  */
 
-console.log("--- INÍCIO DA EXECUÇÃO DO SISTEMA DE GERENCIAMENTO DA CLÍNICA ---");
+console.log(
+  "--- INÍCIO DA EXECUÇÃO DO SISTEMA DE GERENCIAMENTO DA CLÍNICA ---"
+);
 
 // --- 1. MODELAGEM DAS ENTIDADES ---
-// 
+//
 
 // Classe base Pessoa
 class Pessoa {
-    constructor(id, nome, cpf) {
-        this.id = id;
-        this.nome = nome;
-        this.cpf = cpf; // 
-    }
+  constructor(id, nome, cpf) {
+    this.id = id;
+    this.nome = nome;
+    this.cpf = cpf; //
+  }
 }
 
 // Paciente herda de Pessoa
 class Paciente extends Pessoa {
-    constructor(id, nome, cpf, telefone) {
-        super(id, nome, cpf);
-        this.telefone = telefone; // 
-    }
+  constructor(id, nome, cpf, telefone) {
+    super(id, nome, cpf);
+    this.telefone = telefone; //
+  }
 }
 
 // Médico herda de Pessoa
 class Medico extends Pessoa {
-    constructor(id, nome, cpf, crm) {
-        super(id, nome, cpf);
-        this.crm = crm; // 
-        this.especializacoes = []; // Um médico pode ter uma ou muitas especializações 
-    }
+  constructor(id, nome, cpf, crm) {
+    super(id, nome, cpf);
+    this.crm = crm; //
+    this.especializacoes = []; // Um médico pode ter uma ou muitas especializações
+  }
 
-    adicionarEspecializacao(especializacao) {
-        this.especializacoes.push(especializacao);
-    }
+  adicionarEspecializacao(especializacao) {
+    this.especializacoes.push(especializacao);
+  }
 }
 
 class Especializacao {
-    constructor(id, nome, descricao) {
-        this.id = id;
-        this.nome = nome; // 
-        this.descricao = descricao; // 
-    }
+  constructor(id, nome, descricao) {
+    this.id = id;
+    this.nome = nome; //
+    this.descricao = descricao; //
+  }
 }
 
 class Endereco {
-    constructor(id, logradouro, bairro, cidade, cep) {
-        this.id = id;
-        this.logradouro = logradouro; // 
-        this.bairro = bairro; // 
-        this.cidade = cidade; // 
-        this.cep = cep; // 
-    }
+  constructor(id, logradouro, bairro, cidade, cep) {
+    this.id = id;
+    this.logradouro = logradouro; //
+    this.bairro = bairro; //
+    this.cidade = cidade; //
+    this.cep = cep; //
+  }
 }
 
 class Clinica {
-    constructor(id, nome, endereco) {
-        this.id = id;
-        this.nome = nome; // 
-        this.endereco = endereco; // 
-    }
+  constructor(id, nome, endereco) {
+    this.id = id;
+    this.nome = nome; //
+    this.endereco = endereco; //
+  }
 }
 
 class Consulta {
-    constructor(id, medico, paciente, data, hora, clinica) {
-        this.id = id;
-        this.medico = medico; // 
-        this.paciente = paciente; // 
-        this.data = data; // 
-        this.hora = hora; // 
-        this.clinica = clinica; // 
-    }
+  constructor(id, medico, paciente, data, hora, clinica) {
+    this.id = id;
+    this.medico = medico; //
+    this.paciente = paciente; //
+    this.data = data; //
+    this.hora = hora; //
+    this.clinica = clinica; //
+  }
 }
 
 // --- 2. BANCO DE DADOS EM MEMÓRIA (ARRAYS) ---
-// 
+//
 
 let pacientes = [];
 let medicos = [];
@@ -93,72 +95,173 @@ let consultas = [];
 let idContador = 1; // Simula um auto-incremento de IDs
 
 // --- 3. DADOS DE EXEMPLO (SEM INPUT DO TECLADO) ---
-// 
+//
 
 const carregarDadosIniciais = () => {
-    // Especializações
-    const cardiologia = new Especializacao(idContador++, "Cardiologia", "Cuida do coração.");
-    const dermatologia = new Especializacao(idContador++, "Dermatologia", "Cuida da pele.");
-    especializacoes.push(cardiologia, dermatologia);
+  // Especializações
+  const cardiologia = new Especializacao(
+    idContador++,
+    "Cardiologia",
+    "Cuida do coração."
+  );
+  const dermatologia = new Especializacao(
+    idContador++,
+    "Dermatologia",
+    "Cuida da pele."
+  );
+  especializacoes.push(cardiologia, dermatologia);
 
-    // Endereços e Clínicas
-    const endereco1 = new Endereco(idContador++, "Rua das Flores, 123", "Centro", "Cidade A", "12345-000");
-    const clinica1 = new Clinica(idContador++, "Clínica Bem-Estar", endereco1);
-    enderecos.push(endereco1);
-    clinicas.push(clinica1);
+  // Endereços e Clínicas
+  const endereco1 = new Endereco(
+    idContador++,
+    "Rua das Flores, 123",
+    "Centro",
+    "Cidade A",
+    "12345-000"
+  );
+  const clinica1 = new Clinica(idContador++, "Clínica Bem-Estar", endereco1);
+  enderecos.push(endereco1);
+  clinicas.push(clinica1);
 
-    // Médicos
-    const medico1 = new Medico(idContador++, "Dr. Carlos", "111.111.111-11", "CRM-1234");
-    medico1.adicionarEspecializacao(cardiologia);
-    const medico2 = new Medico(idContador++, "Dra. Ana", "222.222.222-22", "CRM-5678");
-    medico2.adicionarEspecializacao(dermatologia);
-    medicos.push(medico1, medico2);
+  // Médicos
+  const medico1 = new Medico(
+    idContador++,
+    "Dr. Carlos",
+    "111.111.111-11",
+    "CRM-1234"
+  );
+  medico1.adicionarEspecializacao(cardiologia);
+  const medico2 = new Medico(
+    idContador++,
+    "Dra. Ana",
+    "222.222.222-22",
+    "CRM-5678"
+  );
+  medico2.adicionarEspecializacao(dermatologia);
+  medicos.push(medico1, medico2);
 
-    // Pacientes
-    const paciente1 = new Paciente(idContador++, "João Silva", "333.333.333-33", "9999-8888");
-    const paciente2 = new Paciente(idContador++, "Maria Souza", "444.444.444-44", "7777-6666");
-    const paciente3 = new Paciente(idContador++, "Pedro Costa", "555.555.555-55", null); // Exemplo de telefone nulo
-    pacientes.push(paciente1, paciente2, paciente3);
+  // Pacientes
+  const paciente1 = new Paciente(
+    idContador++,
+    "João Silva",
+    "333.333.333-33",
+    "9999-8888"
+  );
+  const paciente2 = new Paciente(
+    idContador++,
+    "Maria Souza",
+    "444.444.444-44",
+    "7777-6666"
+  );
+  const paciente3 = new Paciente(
+    idContador++,
+    "Pedro Costa",
+    "555.555.555-55",
+    null
+  ); // Exemplo de telefone nulo
+  pacientes.push(paciente1, paciente2, paciente3);
 
-    // Consultas
-    const consulta1 = new Consulta(idContador++, medico1, paciente1, "2025-10-05", "10:00", clinica1);
-    const consulta2 = new Consulta(idContador++, medico2, paciente2, "2025-10-06", "14:30", clinica1);
-    consultas.push(consulta1, consulta2);
+  // Consultas
+  const consulta1 = new Consulta(
+    idContador++,
+    medico1,
+    paciente1,
+    "2025-10-05",
+    "10:00",
+    clinica1
+  );
+  const consulta2 = new Consulta(
+    idContador++,
+    medico2,
+    paciente2,
+    "2025-10-06",
+    "14:30",
+    clinica1
+  );
+  consultas.push(consulta1, consulta2);
 
-    console.log("✔ Dados iniciais carregados em memória.");
+  console.log("✔ Dados iniciais carregados em memória.");
 };
 
 // --- 4. FUNCIONALIDADES DO SISTEMA ---
-// 
+//
 
 // Cadastrar novo registro (usando Arrow Function)
 const cadastrarPaciente = (nome, cpf, telefone) => {
-    const novoPaciente = new Paciente(idContador++, nome, cpf, telefone);
-    pacientes.push(novoPaciente);
-    console.log(`\n✔ Paciente "${nome}" cadastrado com sucesso!`);
-    return novoPaciente;
+  const novoPaciente = new Paciente(idContador++, nome, cpf, telefone);
+  pacientes.push(novoPaciente);
+  console.log(`\n✔ Paciente "${nome}" cadastrado com sucesso!`);
+  return novoPaciente;
 };
 
 // Listar registros (usando Template Literals)
 const listarPacientes = () => {
-    console.log("\n--- LISTA DE PACIENTES ---");
-    pacientes.forEach(p => {
-        console.log(`ID: ${p.id} | Nome: ${p.nome} | CPF: ${p.cpf} | Telefone: ${p.telefone}`);
-    });
-    console.log("--------------------------");
+  console.log("\n--- LISTA DE PACIENTES ---");
+  pacientes.forEach((p) => {
+    console.log(
+      `ID: ${p.id} | Nome: ${p.nome} | CPF: ${p.cpf} | Telefone: ${p.telefone}`
+    );
+  });
+  console.log("--------------------------");
 };
 
 const listarConsultas = () => {
-    console.log("\n--- LISTA DE CONSULTAS ---");
-    consultas.forEach(c => {
-        // Desestruturação de Objetos
-        const { paciente, medico, data, hora, clinica } = c;
-        const { nome: nomePaciente } = paciente;
-        const { nome: nomeMedico } = medico;
-        const { nome: nomeClinica } = clinica;
+  console.log("\n--- LISTA DE CONSULTAS ---");
+  consultas.forEach((c) => {
+    // Desestruturação de Objetos
+    const { paciente, medico, data, hora, clinica } = c;
+    const { nome: nomePaciente } = paciente;
+    const { nome: nomeMedico } = medico;
+    const { nome: nomeClinica } = clinica;
 
-        // Uso de Template Literals
-        console.log(`Data: ${data} às ${hora} | Paciente: ${nomePaciente} | Médico: ${nomeMedico} | Clínica: ${nomeClinica}`);
-    });
-    console.log("----------------------------");
+    // Uso de Template Literals
+    console.log(
+      `Data: ${data} às ${hora} | Paciente: ${nomePaciente} | Médico: ${nomeMedico} | Clínica: ${nomeClinica}`
+    );
+  });
+  console.log("----------------------------");
+};
+
+// Remover paciente pelo Id
+const removerPaciente = (id) => {
+  const tamanhoInicial = pacientes.length;
+  pacientes = pacientes.filter((p) => p.id !== id);
+  if (pacientes.length < tamanhoInicial) {
+    console.log(`\n✔ Paciente com ID ${id} foi removido.`);
+  } else {
+    console.log(`\n✖ Paciente com ID ${id} não encontrado.`);
+  }
+  console.log("----------------------------");
+};
+
+// Atualizar todos os dados do paciente
+const atualizarPacienteCompleto = (id, novoNome, novoCpf, novoTelefone) => {
+  const paciente = pacientes.find((p) => p.id === id);
+  if (paciente) {
+    paciente.nome = novoNome;
+    paciente.cpf = novoCpf;
+    paciente.telefone = novoTelefone;
+    console.log(`\n✔ Dados do paciente ${novoNome} (ID: ${id}) atualizados.`);
+  } else {
+    console.log(`\n✖ Paciente com ID ${id} não encontrado para atualização.`);
+  }
+  console.log("----------------------------");
+};
+
+// Atualizar campos específicos do paciente
+const atualizarCampoPaciente = (id, campo, valor) => {
+  const paciente = pacientes.find((p) => p.id === id);
+  if (paciente) {
+    if (paciente.hasOwnProperty(campo)) {
+      paciente[campo] = valor;
+      console.log(
+        `\n✔ O campo "${campo}" do paciente com ID ${id} foi atualizado para "${valor}".`
+      );
+    } else {
+      console.log(`\n✖ O campo "${campo}" não existe para o paciente.`);
+    }
+  } else {
+    console.log(`\n✖ Paciente com ID ${id} não encontrado.`);
+  }
+  console.log("----------------------------");
 };
